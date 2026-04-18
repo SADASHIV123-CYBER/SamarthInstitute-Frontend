@@ -2,7 +2,7 @@ import { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || 'https://samarthinstitute-backend.onrender.com/api';
 
 const AuthContext = createContext();
 
@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-  // 🔥 Set base URL globally
+  // 🔥 Set base URL globally - MUST include /api
   axios.defaults.baseURL = API_URL;
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const { data } = await axios.get('/auth/me'); // ✅ removed /api
+      const { data } = await axios.get('/auth/me');
       setUser(data.user);
     } catch (error) {
       localStorage.removeItem('token');
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const { data } = await axios.post('/auth/login', { email, password }); // ✅ fixed
+      const { data } = await axios.post('/auth/login', { email, password });
       localStorage.setItem('token', data.token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
       setToken(data.token);
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const { data } = await axios.post('/auth/register', userData); // ✅ fixed
+      const { data } = await axios.post('/auth/register', userData);
       localStorage.setItem('token', data.token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
       setToken(data.token);
