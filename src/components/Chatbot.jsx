@@ -50,7 +50,7 @@ const Chatbot = () => {
 
   const submitLead = async () => {
     try {
-      await axios.post('/api/leads', formData);
+      await axios.post('/leads', formData);
       setSubmitted(true);
       toast.success('Thank you! We will contact you soon.');
       setTimeout(() => {
