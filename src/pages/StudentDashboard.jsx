@@ -23,18 +23,18 @@ const StudentDashboard = () => {
   }, []);
 
   const fetchAttendance = async () => {
-    const { data } = await axios.get('/api/attendance/my');
+    const { data } = await axios.get('/attendance/my');
     setMyAttendance(data.records);
   };
 
   const fetchActiveTest = async () => {
     try {
-      const { data } = await axios.get('/api/tests/active');
+      const { data } = await axios.get('/tests/active');
       setActiveTest(data.test);
       if (data.test) {
-        const attemptRes = await axios.get(`/api/tests/${data.test._id}/attempt`);
+        const attemptRes = await axios.get(`/tests/${data.test._id}/attempt`);
         setTestAttempt(attemptRes.data.attempt);
-        const lbRes = await axios.get(`/api/tests/${data.test._id}/leaderboard`);
+        const lbRes = await axios.get(`/tests/${data.test._id}/leaderboard`);
         setLeaderboard(lbRes.data.leaderboard);
       }
     } catch (error) {
@@ -43,14 +43,14 @@ const StudentDashboard = () => {
   };
 
   const fetchNotes = async () => {
-    const { data } = await axios.get('/api/notes');
+    const { data } = await axios.get('/notes');
     setNotes(data.notes);
   };
 
   const markAttendance = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/attendance/mark', { code: attendanceCode });
+      await axios.post('/attendance/mark', { code: attendanceCode });
       toast.success('Attendance marked');
       setAttendanceCode('');
       fetchAttendance();

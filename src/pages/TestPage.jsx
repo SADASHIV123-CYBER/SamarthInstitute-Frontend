@@ -17,7 +17,7 @@ const TestPage = () => {
 
   const fetchTest = async () => {
     try {
-      const { data } = await axios.get('/api/tests/active');
+      const { data } = await axios.get('/tests/active');
       if (!data.test || data.test._id !== id) {
         toast.error('Test not available');
         navigate('/dashboard');
@@ -63,7 +63,7 @@ const TestPage = () => {
   const submitTest = async () => {
     try {
       const timeTaken = test.duration * 60 - timeLeft;
-      const { data } = await axios.post('/api/tests/submit', {
+      const { data } = await axios.post('/tests/submit', {
         testId: test._id,
         answers,
         timeTaken,
