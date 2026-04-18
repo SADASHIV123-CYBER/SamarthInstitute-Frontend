@@ -1,9 +1,12 @@
 import axios from 'axios';
 
-// Create axios instance with baseURL set to /api
+// Use environment variable for API URL
+const API_URL = import.meta.env.VITE_API_URL || '/api';
+
 const axiosInstance = axios.create({
-  baseURL: '/api',
+  baseURL: API_URL,
   timeout: 30000,
+  withCredentials: true, // Important for CORS with credentials if needed
 });
 
 // Request interceptor
@@ -32,7 +35,10 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      // Only redirect if not already on login page
+      if (!window.location.pathname.includes('/login')) {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }
