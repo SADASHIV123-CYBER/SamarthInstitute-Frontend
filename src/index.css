@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-purple-700 text-white px-6 py-2 rounded-lg hover:bg-purple-800 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-purple-700 border border-purple-700 px-6 py-2 rounded-lg hover:bg-purple-50 transition-colors;
+  }
+}
